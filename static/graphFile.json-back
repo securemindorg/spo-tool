@@ -1,0 +1,18 @@
+{
+  "nodes":[
+		{"name":"Holly White","group":1},
+		{"name":"Joshua White","group":1},
+		{"name":"Elizabeth White","group":1},
+		{"name":"Alexis White","group":1},
+		{"name":"Izzy White","group":1}
+	],
+  "links":[
+		{"source":"Holly White","target":"Joshua White","weight":2},
+		{"source":"Holly White","target":"Elizabeth White","weight":2},
+                {"source":"Holly White","target":"Alexis White","weight":2},
+                {"source":"Holly White","target":"Izzy White","weight":2},
+                {"source":"Joshua White","target":"Elizabeth White","weight":2},
+                {"source":"Joshua White","target":"Alexis White","weight":2},
+                {"source":"Joshua White","target":"Izzy White","weight":2}
+	]
+}
