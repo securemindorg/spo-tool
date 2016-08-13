@@ -13,6 +13,9 @@ import matplotlib.pyplot as plt
 # this is my library
 import CreateUserJson
 
+# this is the local nocache library
+from nocache import nocache
+
 # webpp  variable
 DEBUG = True
 app = Flask(__name__)
@@ -31,9 +34,10 @@ class ReusableForm(Form):
 
     def reset(self):
         blankData = MultiDict([ ('csrf', self.reset_csrf() ) ])
-        self.process(blankData) 
+        self.process(blankData)
 
 @app.route("/", methods=['GET', 'POST'])
+@nocache
 
 # default example function from FLASK example that has been modified
 def hello():
@@ -70,7 +74,7 @@ def hello():
             flash('Error: All the form fields are required. ')
 
     # returns the index.html to the browser
-    return render_template('index.html', form=form)
+    return render_template("index.html", form=form)
 
 
 if __name__ == "__main__":

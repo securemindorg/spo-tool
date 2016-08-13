@@ -6,7 +6,7 @@ joshua white,has.degree,phd
 holly white,friends.with,joshua white
 joshua white,connected.to.org,afrl
 joshua white,friends.with,nancy dillman
-holly White,has.degree,ms
+holly white,has.degree,ms
 jeremy fields,employed.by,critical technologies
 stew card,employed.by,critical technologies
 stew card,employed.by,ax enterprises
@@ -36,3 +36,40 @@ rsignia,connected.to.org,iai
 rsignia,connected.to.org,vion
 rsignia,connected.to.org,siege
 rsignia,connected.to.org,oracle
+joshua white,has.title,evp of engineering
+alexis white,connected.to.org,jarvis middle school
+izzy white,connected.to.org,barringer elimentary school
+holly white,employed.by,jarvis middle school
+john bay,employed.by,bingamton university
+tracy checksfield,employed.by,griffiss institute
+frank hoke,employed.by,griffiss institute
+john bay,connected.to.org,cyber research institute
+john bay,has.degree,phd
+joshua white,related.to,elizabeth white
+joshua white,related.to,alexis white
+joshua white,related.to,izzy white
+joshua white,connected.to.org,griffiss institute
+nancy dillman,connected.to.org,keyw
+nancy dillman,connected.to.org,sensis
+rsignia,connected.to.org,imperva
+mary carol chruscicki,employed.by,ax enterprises
+mary carol chruscicki,connected.to.org,cny cyber alliance
+dave climek,employed.by,suny polytechnic
+kevin joyce,employed.by,quanterion
+joe sharkey,employed.by,siege
+holly white,related.to,joshua white
+joshua white,connected.to.org,clarkson university
+jeanna matthews,connected.to.org,clarkson university
+joshua white,connected.to.org,clarkson university
+joshua white,connected.to.org,clarkson university
+john bay,connected.to.org,darpa
+kevin joyce,connected.to.org,st. elizabeth's hospital
+charles green,employed.by,ais
+charles green,connected.to.org,afrl
+joshua white,connected.to.org,nystec
+kevin joyce,connected.to.org,nystec
+len popyack,has.degree,phd
+len popyack,connected.to.org,afrl
+len popyack,employed.by,utica college
+len popyack,connected.to.org,ais
+len popyack,connected.to.org,cyber research institute
