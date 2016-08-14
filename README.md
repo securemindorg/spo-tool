@@ -34,3 +34,18 @@ Navigate using the tabs at the top of the graph. The first one will give you all
 - templates/
 -- contains the html code for the project, this is where the form and D3 changes are made
 
+## Citing This Software
+
+Please cite this software in your research as:
+
+```
+@misc{Charles2013,
+  author = {White, Joshua. Fields, Jeremy.},
+  title = {Associations Graph},
+  year = {2016},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/securemindorg/spo-tool}},
+  commit = {latest}
+}
+```
