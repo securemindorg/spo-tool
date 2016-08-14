@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
-<script type='text/javascript' src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"> </script>
-<script type='text/javascript' src="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"> </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
 <html>
     <head>
         <title>Reusable Form Demo</title>
@@ -97,47 +97,45 @@
 	</td>
    <td width="20px">
    </td>
-  
-
-  
-
 
  <td>
 
-// this section is for the search box
+<!-- this section is for the search box -->
 <script>
 			//##########################################################
-
+			
+			d3.json("static/graphFile.json", function(error, graph) {
+  				if (error) throw error;			
+			
 			var optArray = [];
-				for (var i = 0; i < graph.nodes.length - 1; i++) {
-    			optArray.push(graph.nodes[i].name);
-				}
-				optArray = optArray.sort();
-
+			for (var i = 0; i < graph.nodes.length - 1; i++) {
+			    optArray.push(graph.nodes[i].name);
+			}
+			
+			optArray = optArray.sort();
 			$(function () {
-    			$("#search").autocomplete({
-        		source: optArray
-    			});
+			    $("#search").autocomplete({
+			        source: optArray
+			    });
 			});
-
+			});
 			function searchNode() {
-    			//find the node
-    			var selectedVal = document.getElementById('search').value;
-    			var node = svg.selectAll(".node");
-    				if (selectedVal == "none") {
-        				node.style("stroke", "white").style("stroke-width", "1");
-    				} else {
-        				var selected = node.filter(function (d, i) {
-            			return d.name != selectedVal;
-        				});
-        				
-	      			selected.style("opacity", "0");
-        				var link = svg.selectAll(".link")
-        					link.style("opacity", "0");
-        				d3.selectAll(".node, .link").transition()
-            			.duration(5000)
-            			.style("opacity", 1);
-    				}
+			    //find the node
+			    var selectedVal = document.getElementById('search').value;
+			    var node = svg.selectAll(".node");
+			    if (selectedVal == "none") {
+			        node.style("stroke", "white").style("stroke-width", "1");
+			    } else {
+			        var selected = node.filter(function (d, i) {
+			            return d.name != selectedVal;
+			        });
+			        selected.style("opacity", "0");
+			        var link = svg.selectAll(".link")
+			        link.style("opacity", "0");
+			        d3.selectAll(".node, .link").transition()
+			            .duration(5000)
+			            .style("opacity", 1);
+			    }
 			}
 
 			//##################################################
@@ -145,16 +143,17 @@
  
  		<svg width="1200" height="750"></svg>
  		
- 		// this div sets where the search box is
+ 		<!-- this div sets where the search box is -->
 		<div align="right" class="ui-widget">
    		<input id="search">
-    		<button type="button" onclick="searchNode()">Search</button>
+    		<button type="button" class="btn btn-success" onclick="searchNode()">Search Graph</button>
 		</div>
 		  
 
-		// this script is for the d3 force directed graph
-		<script>
+	
 
+		<script>
+		// this script is for the d3 force directed graph
 			var svg = d3.select("svg").call(d3.zoom().on("zoom", function () {svg.attr("transform", d3.event.transform)})).append("g"),
 				width = +svg.attr("width"),
 				height = +svg.attr("height");
