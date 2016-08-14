@@ -15,10 +15,20 @@
 
 		 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+		 
+		 <script async defer src="https://buttons.github.io/buttons.js"></script>
     </head>
 
 <style type="text/css">
 	div.container {
+		margin-left: 2% ;
+		margin-right: 2% ;
+		padding: 10px ;
+		background-color: #222222 ;
+		color: white;
+	}
+	
+		div.containertwo {
 		margin-left: 2% ;
 		margin-right: 2% ;
 		padding: 10px ;
@@ -47,11 +57,14 @@
  
 <table>
 <tr>
-	<td width="50px"></td>
-	<td>
-		<div class="container" style="width:450px;">
+	<td width="40px"style="background-color:#222222"></td>
+	<td style="background-color:#222222">
+	
+		<center><img src="static/logo.png" style="height:180;"></center>
+		
+		<div class="container" style="width:380px;">
  
-		 	<h2>Associations Graph Input Form</h2>
+		 	<h2>Associations Graph</h2>
  		 	<h3>Written in Flask, Python, HTML, d3.js, bootstrap.js</h3>
  		 	<form  action="" method="post" role="form">
  		   	{{ form.csrf }}
@@ -99,30 +112,44 @@
  
 		</div>
 		<br>            
+
+		<br>
+		<div align="center">
+		<a class="github-button" href="https://github.com/securemindorg" data-style="mega" 
+		data-count-href="/securemindorg/followers" data-count-api="/users/securemindorg#followers" 
+		data-count-aria-label="# followers on GitHub" aria-label="Follow @securemindorg on GitHub">Follow @securemindorg</a>
+		<a class="github-button" href="https://github.com/securemindorg/spo-tool/fork" 
+      	data-icon="octicon-repo-forked" data-style="mega" data-count-href="/securemindorg/spo-tool/network" 
+      	data-count-api="/repos/securemindorg/spo-tool#forks_count" data-count-aria-label="# forks on GitHub" 
+      	aria-label="Fork securemindorg/spo-tool on GitHub">Fork</a>
+      <br>
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" 
+      	style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
+      </div>
 	</td>
-   <td width="20px">
+   <td width="40px" style="background-color:#222222">
    </td>
 
  <td>
 
 <!-- this section setups the tabs -->
-<div class="container">
+<div class="containertwo">
   <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#menu0">All connections</a></li>
-    <li><a data-toggle="tab" href="#menu1">Strong Connections</a></li>
-    <li><a data-toggle="tab" href="#menu2">Fam-Friends</a></li>
-    <li><a data-toggle="tab" href="#menu3">Weak Connections</a></li>
+    <li><a href="?data=">All connections</a></li>
+    <li><a href="?data=strong">Strong Connections</a></li>
+    <li><a href="?data=fam">Fam-Friends</a></li>
+    <li><a href="?data=weak">Weak Connections</a></li>
   </ul>
 
-  <div class="tab-content">
+  <div class="tab-content" style="border:1px solid #e3e3e3">
 
-    <div id="menu0" class="tab-pane fade in active" style="border:1px solid #e3e3e3">
+    <div id="menu0" class="tab-pane fade in active">
       
 <!-- this section is for the search box -->
 <script>
 			//##########################################################
 			
-			d3.json("static/graphFile.json", function(error, graph) {
+			d3.json("static/{{ text }}.json", function(error, graph) {
   				if (error) throw error;			
 			
 			var optArray = [];
@@ -160,15 +187,14 @@
 </script>   
  
  		<br><br>
- 		<svg width="1150" height="620"></svg>
+ 		<svg width="1300" height="620"></svg>
  		
  		<!-- this div sets where the search box is -->
-		<div align="right" style="padding-right: 20px" class="ui-widget">
+		<div align="right" class="ui-widget"  style="padding-right: 20px" >
    		<input id="search">
     		<button type="button"  class="btn btn-success" onclick="searchNode()">Search Graph</button>
 		</div>
-		<br>
-		
+		<br> 
 		<script>
 		// this script is for the d3 force directed graph
 			var svg = d3.select("svg").call(d3.zoom().on("zoom", function () {svg.attr("transform", d3.event.transform)})).append("g"),
@@ -182,7 +208,7 @@
    			.force("charge", d3.forceManyBody())
     			.force("center", d3.forceCenter(width / 2, height / 2));
 
-			d3.json("static/graphFile.json", function(error, graph) {
+			d3.json("static/{{ text }}.json", function(error, graph) {
   				if (error) throw error;
 
   			var link = svg.append("g")
@@ -251,17 +277,9 @@
 		</script>
 
     </div>
-
-    	 <div id="menu1" class="tab-pane fade">  Stuff  </div>
-
-    	 <div id="menu2" class="tab-pane fade">  Stuff  </div>
-
-	    <div id="menu3" class="tab-pane fade">  Stuff  </div>
   </div>
 </div>
 	</td>
-
-
 </tr>
 </table>
 

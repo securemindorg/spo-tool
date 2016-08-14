@@ -5,7 +5,7 @@
 # contributions by: Jeremy Fields
 #
 
-from flask import Flask, render_template, flash, request
+from flask import Flask, render_template, redirect, url_for, request
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -36,13 +36,36 @@ class ReusableForm(Form):
         blankData = MultiDict([ ('csrf', self.reset_csrf() ) ])
         self.process(blankData)
 
-@app.route("/", methods=['GET', 'POST'])
 @nocache
 
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+            error = 'Invalid Credentials. Please try again.'
+        else:
+            return redirect(url_for('hello'))
+    return render_template('login.html', error=error)
+
+
+@app.route("/hello", methods=['GET', 'POST'])
 # default example function from FLASK example that has been modified
 def hello():
     form = ReusableForm(request.form)
-
+    try:
+        dataSet = request.args.get('data')
+    except:
+		pass
+	
+    if dataSet == "fam":
+        dataSet = "graphFile-FamFriends"
+    elif dataSet == "strong":
+        dataSet = "graphFile-Strong"
+    elif dataSet == "weak":
+        dataSet = "graphFile-Weak"
+    else:
+        dataSet = "graphFile"
     print form.errors
 
     # looks for the POST request from the browser
@@ -74,8 +97,7 @@ def hello():
             flash('Error: All the form fields are required. ')
 
     # returns the index.html to the browser
-    return render_template("index.html", form=form)
-
+    return render_template("index.html", form=form,text=dataSet.lstrip())
 
 if __name__ == "__main__":
     app.run()

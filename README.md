@@ -16,3 +16,7 @@ You may need to refresh the page to get the graph to load, I haven't figured thi
 -- contains the bootstrap.js files and the temporary graph json structure
 - templates/
 -- contains the html code for the project, this is where the form and D3 changes are made
+
+## Default Login
+
+- The default login is admin:admin you can change this in the spo-tool.py script
