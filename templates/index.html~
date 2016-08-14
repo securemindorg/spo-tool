@@ -3,6 +3,7 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+
 <html>
     <head>
         <title>Reusable Form Demo</title>
@@ -109,7 +110,7 @@
 			
 			var optArray = [];
 			for (var i = 0; i < graph.nodes.length - 1; i++) {
-			    optArray.push(graph.nodes[i].name);
+			    optArray.push(graph.nodes[i].id);
 			}
 			
 			optArray = optArray.sort();
@@ -127,7 +128,7 @@
 			        node.style("stroke", "white").style("stroke-width", "1");
 			    } else {
 			        var selected = node.filter(function (d, i) {
-			            return d.name != selectedVal;
+			            return d.id != selectedVal;
 			        });
 			        selected.style("opacity", "0");
 			        var link = svg.selectAll(".link")
