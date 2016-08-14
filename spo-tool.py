@@ -5,7 +5,7 @@
 # contributions by: Jeremy Fields
 #
 
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, flash
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 import networkx as nx
 import matplotlib.pyplot as plt
