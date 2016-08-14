@@ -8,6 +8,23 @@ Enter the subjects name, choose a predicate from the drop down list, enter the o
 
 You may need to refresh the page to get the graph to load, I haven't figured this one out yet. 
 
+Once you have launched the app navigate to `http://127.0.0.1:5000/` in your browser
+
+
+## Default Login
+
+The default login is admin:admin you can change this in the spo-tool.py script
+
+![Login Screen](/static/screenshot1.jpeg?raw=true "Login Screen")
+
+
+## Navigation
+
+Navigate using the tabs at the top of the graph. The first one will give you all connections, the others you'll figure out on your own. At the bottom of the screen you will find a search box that will help you navigate plots with a lot of nodes. 
+
+![Main Screen](/static/screenshot2.jpeg?raw=true "Main Screen")
+
+
 ## Directory Format
 
 - data/ 
@@ -17,6 +34,3 @@ You may need to refresh the page to get the graph to load, I haven't figured thi
 - templates/
 -- contains the html code for the project, this is where the form and D3 changes are made
 
-## Default Login
-
-- The default login is admin:admin you can change this in the spo-tool.py script

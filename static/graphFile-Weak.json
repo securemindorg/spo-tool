@@ -1,1 +1,1 @@
-{"nodes": [], "links": []}
+{"nodes": [{"group": 1, "id": "test user one"}, {"group": 1, "id": "ms"}], "links": [{"source": "test user one", "target": "ms", "value": 1}]}
