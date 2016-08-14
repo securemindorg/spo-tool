@@ -1,16 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-<script src="https://d3js.org/d3.v4.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="http://code.jquery.com/ui/1.11.3/jquery-ui.js" ></script>
+
 
 <html>
     <head>
         <title>Reusable Form Demo</title>
+		 <script src="https://d3js.org/d3.v4.min.js"></script>
+		 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		 <script src="http://code.jquery.com/ui/1.11.3/jquery-ui.js" ></script>
+
        <link rel="stylesheet" media="screen" href ="static/css/bootstrap.min.css">
        <link rel="stylesheet" href="static/css/bootstrap-theme.min.css">
        <meta name="viewport" content = "width=device-width, initial-scale=1.0">
- 
+
+		 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
     </head>
 
 <style type="text/css">
@@ -101,6 +105,19 @@
 
  <td>
 
+<!-- this section setups the tabs -->
+<div class="container">
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#menu0">All connections</a></li>
+    <li><a data-toggle="tab" href="#menu1">Strong Connections</a></li>
+    <li><a data-toggle="tab" href="#menu2">Fam-Friends</a></li>
+    <li><a data-toggle="tab" href="#menu3">Weak Connections</a></li>
+  </ul>
+
+  <div class="tab-content">
+
+    <div id="menu0" class="tab-pane fade in active">
+      
 <!-- this section is for the search box -->
 <script>
 			//##########################################################
@@ -143,17 +160,14 @@
 </script>   
  
  		<br><br>
- 		<svg width="1200" height="730"></svg>
+ 		<svg width="1200" height="620"></svg>
  		
  		<!-- this div sets where the search box is -->
 		<div align="right" class="ui-widget">
    		<input id="search">
     		<button type="button"  class="btn btn-success" onclick="searchNode()">Search Graph</button>
 		</div>
-		  
-
-	
-
+		 
 		<script>
 		// this script is for the d3 force directed graph
 			var svg = d3.select("svg").call(d3.zoom().on("zoom", function () {svg.attr("transform", d3.event.transform)})).append("g"),
@@ -234,7 +248,417 @@
 		  }
 
 		</script>
+
+    </div>
+
+    <div id="menu1" class="tab-pane fade">
+		
+<!-- this section is for the search box -->
+<script>
+			//##########################################################
+			
+			d3.json("static/graphFile-Strong.json", function(error, graph) {
+  				if (error) throw error;			
+			
+			var optArray = [];
+			for (var i = 0; i < graph.nodes.length - 1; i++) {
+			    optArray.push(graph.nodes[i].id);
+			}
+			
+			optArray = optArray.sort();
+			$(function () {
+			    $("#search").autocomplete({
+			        source: optArray
+			    });
+			});
+			});
+			function searchNode() {
+			    //find the node
+			    var selectedVal = document.getElementById('search').value;
+			    var node = svg.selectAll(".node");
+			    if (selectedVal == "none") {
+			        node.style("stroke", "white").style("stroke-width", "1");
+			    } else {
+			        var selected = node.filter(function (d, i) {
+			            return d.id != selectedVal;
+			        });
+			        selected.style("opacity", "0");
+			        var link = svg.selectAll(".link")
+			        link.style("opacity", "0");
+			        d3.selectAll(".node, .link").transition()
+			            .duration(5000)
+			            .style("opacity", 1);
+			    }
+			}
+
+			//##################################################
+</script>   
+ 
+ 		<br><br>
+ 		<svg width="1200" height="620"></svg>
+ 		
+ 		<!-- this div sets where the search box is -->
+		<div align="right" class="ui-widget">
+   		<input id="search">
+    		<button type="button"  class="btn btn-success" onclick="searchNode()">Search Graph</button>
+		</div>
+		 
+		<script>
+		// this script is for the d3 force directed graph
+			var svg = d3.select("svg").call(d3.zoom().on("zoom", function () {svg.attr("transform", d3.event.transform)})).append("g"),
+				width = +svg.attr("width"),
+				height = +svg.attr("height");
+
+			var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+			var simulation = d3.forceSimulation()
+    			.force("link", d3.forceLink().id(function(d) { return d.id; }))
+   			.force("charge", d3.forceManyBody())
+    			.force("center", d3.forceCenter(width / 2, height / 2));
+
+			d3.json("static/graphFile-Strong.json", function(error, graph) {
+  				if (error) throw error;
+
+  			var link = svg.append("g")
+      		.attr("class", "links")
+    				.selectAll("line")
+    				.data(graph.links)
+    				.enter().append("line")
+      				.attr("stroke", function(d) { return color(d.value); })
+      				.attr("stroke-width", function(d) { return Math.sqrt(d.value); });
+
+		  var node = svg.selectAll(".node")
+    			.data(graph.nodes)
+    			.enter().append("g")
+    			.attr("class", "node")
+    			.call(d3.drag()
+          		.on("start", dragstarted)
+          		.on("drag", dragged)
+          		.on("end", dragended));
+
+    	  node.append("text")
+      		.attr("dx", 12)
+      		.attr("dy", ".35em")
+      		.text(function(d) { return d.id });
+	  
+  		  node.append("circle").attr("r", 8)
+      		.attr("fill", function(d) { return color(d.group); })
+
+  		  simulation
+      		.nodes(graph.nodes)
+      		.on("tick", ticked);
+
+  		  simulation.force("link")
+      		.links(graph.links);
+
+  		  function ticked() {
+    			link
+        			.attr("x1", function(d) { return d.source.x; })
+        			.attr("y1", function(d) { return d.source.y; })
+        			.attr("x2", function(d) { return d.target.x; })
+        			.attr("y2", function(d) { return d.target.y; });
+
+    	      	  node.attr("cx", function(d) { return d.x; })
+        		.attr("cy", function(d) { return d.y; });
+		  node
+		  		.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });  		  
+  		  }
+		  });
+
+		  function dragstarted(d) {
+  		  		if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+  					d.fx = d.x;
+  					d.fy = d.y;
+		  }
+
+		  function dragged(d) {
+  					d.fx = d3.event.x;
+  					d.fy = d3.event.y;
+		  }
+
+		  function dragended(d) {
+  					if (!d3.event.active) simulation.alphaTarget(0);
+  					d.fx = null;
+  					d.fy = null;
+		  }
+
+		</script>		
+		
+    </div>
+
+    <div id="menu2" class="tab-pane fade">
+	
+<!-- this section is for the search box -->
+<script>
+			//##########################################################
+			
+			d3.json("static/graphFile-FamFriends.json", function(error, graph) {
+  				if (error) throw error;			
+			
+			var optArray = [];
+			for (var i = 0; i < graph.nodes.length - 1; i++) {
+			    optArray.push(graph.nodes[i].id);
+			}
+			
+			optArray = optArray.sort();
+			$(function () {
+			    $("#search").autocomplete({
+			        source: optArray
+			    });
+			});
+			});
+			function searchNode() {
+			    //find the node
+			    var selectedVal = document.getElementById('search').value;
+			    var node = svg.selectAll(".node");
+			    if (selectedVal == "none") {
+			        node.style("stroke", "white").style("stroke-width", "1");
+			    } else {
+			        var selected = node.filter(function (d, i) {
+			            return d.id != selectedVal;
+			        });
+			        selected.style("opacity", "0");
+			        var link = svg.selectAll(".link")
+			        link.style("opacity", "0");
+			        d3.selectAll(".node, .link").transition()
+			            .duration(5000)
+			            .style("opacity", 1);
+			    }
+			}
+
+			//##################################################
+</script>   
+ 
+ 		<br><br>
+ 		<svg width="1200" height="620"></svg>
+ 		
+ 		<!-- this div sets where the search box is -->
+		<div align="right" class="ui-widget">
+   		<input id="search">
+    		<button type="button"  class="btn btn-success" onclick="searchNode()">Search Graph</button>
+		</div>
+		 
+		<script>
+		// this script is for the d3 force directed graph
+			var svg = d3.select("svg").call(d3.zoom().on("zoom", function () {svg.attr("transform", d3.event.transform)})).append("g"),
+				width = +svg.attr("width"),
+				height = +svg.attr("height");
+
+			var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+			var simulation = d3.forceSimulation()
+    			.force("link", d3.forceLink().id(function(d) { return d.id; }))
+   			.force("charge", d3.forceManyBody())
+    			.force("center", d3.forceCenter(width / 2, height / 2));
+
+			d3.json("static/graphFile-FamFriends.json", function(error, graph) {
+  				if (error) throw error;
+
+  			var link = svg.append("g")
+      		.attr("class", "links")
+    				.selectAll("line")
+    				.data(graph.links)
+    				.enter().append("line")
+      				.attr("stroke", function(d) { return color(d.value); })
+      				.attr("stroke-width", function(d) { return Math.sqrt(d.value); });
+
+		  var node = svg.selectAll(".node")
+    			.data(graph.nodes)
+    			.enter().append("g")
+    			.attr("class", "node")
+    			.call(d3.drag()
+          		.on("start", dragstarted)
+          		.on("drag", dragged)
+          		.on("end", dragended));
+
+    	  node.append("text")
+      		.attr("dx", 12)
+      		.attr("dy", ".35em")
+      		.text(function(d) { return d.id });
+	  
+  		  node.append("circle").attr("r", 8)
+      		.attr("fill", function(d) { return color(d.group); })
+
+  		  simulation
+      		.nodes(graph.nodes)
+      		.on("tick", ticked);
+
+  		  simulation.force("link")
+      		.links(graph.links);
+
+  		  function ticked() {
+    			link
+        			.attr("x1", function(d) { return d.source.x; })
+        			.attr("y1", function(d) { return d.source.y; })
+        			.attr("x2", function(d) { return d.target.x; })
+        			.attr("y2", function(d) { return d.target.y; });
+
+    	      	  node.attr("cx", function(d) { return d.x; })
+        		.attr("cy", function(d) { return d.y; });
+		  node
+		  		.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });  		  
+  		  }
+		  });
+
+		  function dragstarted(d) {
+  		  		if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+  					d.fx = d.x;
+  					d.fy = d.y;
+		  }
+
+		  function dragged(d) {
+  					d.fx = d3.event.x;
+  					d.fy = d3.event.y;
+		  }
+
+		  function dragended(d) {
+  					if (!d3.event.active) simulation.alphaTarget(0);
+  					d.fx = null;
+  					d.fy = null;
+		  }
+
+		</script>	
+	
+    </div>
+
+    <div id="menu3" class="tab-pane fade">
+
+<!-- this section is for the search box -->
+<script>
+			//##########################################################
+			
+			d3.json("static/graphFile-Weak.json", function(error, graph) {
+  				if (error) throw error;			
+			
+			var optArray = [];
+			for (var i = 0; i < graph.nodes.length - 1; i++) {
+			    optArray.push(graph.nodes[i].id);
+			}
+			
+			optArray = optArray.sort();
+			$(function () {
+			    $("#search").autocomplete({
+			        source: optArray
+			    });
+			});
+			});
+			function searchNode() {
+			    //find the node
+			    var selectedVal = document.getElementById('search').value;
+			    var node = svg.selectAll(".node");
+			    if (selectedVal == "none") {
+			        node.style("stroke", "white").style("stroke-width", "1");
+			    } else {
+			        var selected = node.filter(function (d, i) {
+			            return d.id != selectedVal;
+			        });
+			        selected.style("opacity", "0");
+			        var link = svg.selectAll(".link")
+			        link.style("opacity", "0");
+			        d3.selectAll(".node, .link").transition()
+			            .duration(5000)
+			            .style("opacity", 1);
+			    }
+			}
+
+			//##################################################
+</script>   
+ 
+ 		<br><br>
+ 		<svg width="1200" height="620"></svg>
+ 		
+ 		<!-- this div sets where the search box is -->
+		<div align="right" class="ui-widget">
+   		<input id="search">
+    		<button type="button"  class="btn btn-success" onclick="searchNode()">Search Graph</button>
+		</div>
+		 
+		<script>
+		// this script is for the d3 force directed graph
+			var svg = d3.select("svg").call(d3.zoom().on("zoom", function () {svg.attr("transform", d3.event.transform)})).append("g"),
+				width = +svg.attr("width"),
+				height = +svg.attr("height");
+
+			var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+			var simulation = d3.forceSimulation()
+    			.force("link", d3.forceLink().id(function(d) { return d.id; }))
+   			.force("charge", d3.forceManyBody())
+    			.force("center", d3.forceCenter(width / 2, height / 2));
+
+			d3.json("static/graphFile-Weak.json", function(error, graph) {
+  				if (error) throw error;
+
+  			var link = svg.append("g")
+      		.attr("class", "links")
+    				.selectAll("line")
+    				.data(graph.links)
+    				.enter().append("line")
+      				.attr("stroke", function(d) { return color(d.value); })
+      				.attr("stroke-width", function(d) { return Math.sqrt(d.value); });
+
+		  var node = svg.selectAll(".node")
+    			.data(graph.nodes)
+    			.enter().append("g")
+    			.attr("class", "node")
+    			.call(d3.drag()
+          		.on("start", dragstarted)
+          		.on("drag", dragged)
+          		.on("end", dragended));
+
+    	  node.append("text")
+      		.attr("dx", 12)
+      		.attr("dy", ".35em")
+      		.text(function(d) { return d.id });
+	  
+  		  node.append("circle").attr("r", 8)
+      		.attr("fill", function(d) { return color(d.group); })
+
+  		  simulation
+      		.nodes(graph.nodes)
+      		.on("tick", ticked);
+
+  		  simulation.force("link")
+      		.links(graph.links);
+
+  		  function ticked() {
+    			link
+        			.attr("x1", function(d) { return d.source.x; })
+        			.attr("y1", function(d) { return d.source.y; })
+        			.attr("x2", function(d) { return d.target.x; })
+        			.attr("y2", function(d) { return d.target.y; });
+
+    	      	  node.attr("cx", function(d) { return d.x; })
+        		.attr("cy", function(d) { return d.y; });
+		  node
+		  		.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });  		  
+  		  }
+		  });
+
+		  function dragstarted(d) {
+  		  		if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+  					d.fx = d.x;
+  					d.fy = d.y;
+		  }
+
+		  function dragged(d) {
+  					d.fx = d3.event.x;
+  					d.fy = d3.event.y;
+		  }
+
+		  function dragended(d) {
+  					if (!d3.event.active) simulation.alphaTarget(0);
+  					d.fx = null;
+  					d.fy = null;
+		  }
+
+		</script>
+
+    </div>
+  </div>
+</div>
 	</td>
+
 
 </tr>
 </table>
