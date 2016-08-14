@@ -39,7 +39,7 @@ Navigate using the tabs at the top of the graph. The first one will give you all
 Please cite this software in your research as:
 
 ```
-@misc{Charles2013,
+@misc{SPOTool2016,
   author = {White, Joshua. Fields, Jeremy.},
   title = {Associations Graph},
   year = {2016},
