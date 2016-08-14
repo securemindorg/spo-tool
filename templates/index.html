@@ -116,7 +116,7 @@
 
   <div class="tab-content">
 
-    <div id="menu0" class="tab-pane fade in active">
+    <div id="menu0" class="tab-pane fade in active" style="border:1px solid #e3e3e3">
       
 <!-- this section is for the search box -->
 <script>
@@ -160,14 +160,15 @@
 </script>   
  
  		<br><br>
- 		<svg width="1200" height="620"></svg>
+ 		<svg width="1150" height="620"></svg>
  		
  		<!-- this div sets where the search box is -->
-		<div align="right" class="ui-widget">
+		<div align="right" style="padding-right: 20px" class="ui-widget">
    		<input id="search">
     		<button type="button"  class="btn btn-success" onclick="searchNode()">Search Graph</button>
 		</div>
-		 
+		<br>
+		
 		<script>
 		// this script is for the d3 force directed graph
 			var svg = d3.select("svg").call(d3.zoom().on("zoom", function () {svg.attr("transform", d3.event.transform)})).append("g"),
