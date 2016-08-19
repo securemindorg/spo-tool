@@ -96,7 +96,7 @@ def hello():
             flash('Error: All the form fields are required. ')
 
     # returns the index.html to the browser
-    return render_template("index.html", form=form,text=dataSet.lstrip())
+    return render_template("graph.html", form=form,text=dataSet.lstrip())
 
 if __name__ == "__main__":
-    app.run()
+    app.run('0.0.0.0')
