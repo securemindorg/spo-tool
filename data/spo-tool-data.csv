@@ -1,3 +1,26 @@
-test user one,connected.to.org,test org one
-test user one,connected.to.project,test project one
-test user one,has.degree,ms
+Elliot Alderson,connected.to.org,Evil Corp
+Elliot Alderson,related.to,Mr Robot
+Elliot Alderson,related.to,Darlene Alderson
+Tyrell Wellick,employed.by,Evil Corp
+Angela Moss,friends.with,Elliot Alderson
+Angela Moss,friends.with,Darlene Alderson
+Elliot Alderson,connected.to.org,FSociety
+Darlene Alderson,connected.to.org,FSociety
+Joanna Wellick,related.to,Tyrell Wellick
+Phillip Price,employed.by,AllSafe
+Elliot Alderson,employed.by,AllSafe
+Angela Moss,employed.by,AllSafe
+Trenton,connected.to.org,FSociety
+Romero,connected.to.org,FSociety
+Mobley,connected.to.org,FSociety
+Cisco,friends.with,Darlene Alderson
+Cisco,connected.to.org,Dark Army
+Gideon Goddard,employed.by,AllSafe
+Lloyd Chung,employed.by,AllSafe
+Ollie Parker,employed.by,AllSafe
+Terry Colby,employed.by,Evil Corp
+Scott Knowles,employed.by,Evil Corp
+Sharon Knowles,employed.by,Evil Corp
+Mr Sutherland,employed.by,Evil Corp
+Antara Nayar,employed.by,Evil Corp
+Whiterose,connected.to.org,Dark Army

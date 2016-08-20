@@ -14,6 +14,8 @@ g = nx.DiGraph()
 
 input_csv = "./data/spo-tool-data.csv"
 output_csv = "./static/data.csv"
+outputtwo_csv = "./static/datatwo.csv"
+outputthree_csv = "./static/datathree.csv"
 
 def overall_network_stats(g):
 	'''
@@ -54,11 +56,15 @@ def overall_network_stats(g):
 
 	# measures of ranking
 	pagerank = nx.pagerank(g)
+	closeness_vitality = nx.closeness_vitality(g)
 
 
 	# <><><><><><><><><><><><><><><><><><><><><>
 	# lets create a data table csv for d3 to use
         # <><><><><><><><><><><><><><><><><><><><><>
+
+
+	# //////// CSV 1 - Degree Measures /////////
 
 	nametemplist = []
 	centralitytemplist = []
@@ -90,12 +96,79 @@ def overall_network_stats(g):
 
 	fout.close()
 
-	#print in_degree_centrality
-	#print out_degree_centrality
-	#print nx.degree(g)
-	#print g.in_degree()
-	#print g.out_degree()
+        # //////// CSV 2 - Centrality Measures /////////
 
+	list_closeness_centrality = []
+        list_betweenness_centrality = []
+	list_edge_betweenness_centrality = []
+        list_eigenvector_centrality = []
+        list_hits_centralities = []
+        list_katz_centrality = []
+	list_load_centrality = []
+
+        fout = open(outputtwo_csv, "w")
+
+        csv_headers = "Node ID,Closeness Cent,Between Cent,Edge Between Cent,Eigenvector Cent,Katz Cent,Load Cent"
+
+	fout.write(csv_headers)
+        fout.write("\n")
+
+	for item in closeness_centrality:
+		list_closeness_centrality.append(degree_centrality[item])
+
+	for item in betweenness_centrality:
+                list_betweenness_centrality.append(betweenness_centrality[item])
+
+	for item in edge_betweenness_centrality:
+                list_edge_betweenness_centrality.append(edge_betweenness_centrality[item])
+
+	for item in eigenvector_centrality:
+                list_eigenvector_centrality.append(eigenvector_centrality[item])
+
+	for item in katz_centrality:
+                list_katz_centrality.append(katz_centrality[item])
+
+	for item in load_centrality:
+                list_load_centrality.append(load_centrality[item])
+
+        for c1, c2, c3, c4, c5, c6, c7 in zip(nametemplist, list_closeness_centrality, list_betweenness_centrality, \
+						  list_edge_betweenness_centrality, list_eigenvector_centrality, \
+						  list_katz_centrality, list_load_centrality):
+		try:
+                	csv_row = str(c1) + "," + str(c2) + "," + str(c3) + "," + str(c4) + "," + str(c5) + "," + str(c6) + "," + str(c7) 
+                	fout.write(csv_row)
+                	fout.write("\n")
+		except:
+			pass
+
+        fout.close()
+
+        # //////// CSV 3 - Connectivity Measures /////////
+
+        pageranklist = []
+        closeness_vitalitylist = []
+
+        fout = open(outputthree_csv, "w")
+
+        for item in pagerank:
+                pageranklist.append(pagerank[item])
+
+        for item in closeness_vitality:
+                closeness_vitalitylist.append(closeness_vitality[item])
+
+        csv_headers = "Node ID,Pagerank,Closeness Vitality"
+
+        fout.write(csv_headers)
+        fout.write("\n")
+
+        for c1, c2, c3 in zip(nametemplist, pageranklist, closeness_vitalitylist):
+                csv_row = c1 + "," + str(c2) + "," + str(c3)
+                fout.write(csv_row)
+                fout.write("\n")
+
+        fout.close()
+
+	# <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
 	# return the necessary variables, this is not elegant but were in a time crunch
 	'''return number_of_nodes, \
 	       number_of_edges, \
@@ -110,7 +183,7 @@ def overall_network_stats(g):
 	       katz_centrality, \
                load_centrality'''
 
-	return 
+	return
 
 def add_edges_to_python_graph(source, target):
 	'''
