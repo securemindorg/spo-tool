@@ -1,3 +1,5 @@
+# !!! This project is no longer maintained or updated, please see https://github.com/securemindorg for new projects
+
 # Subject Predicate Object - Relationship Graphing Tool
 
 ## Execution:
